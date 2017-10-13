@@ -33,10 +33,12 @@ public class FieldHider extends FieldBehaviours {
 
 
 void Doit() {	
-	// CONFIGURATIONS
+// CONFIGURATIONS
 
 def SELECTION="Category"
 def KEYVALUE="Business Campaign"
+def DATE1="Business Campaign Start"
+//def DATE1="Business Campaign End"
 // END OF CONFIGURATIONS
 
 
@@ -52,12 +54,19 @@ def customFieldManager = ComponentAccessor.getCustomFieldManager()
 def issueManager = ComponentAccessor.getIssueManager()
 
 
-issuekey=underlyingIssue // from ScriptRunner example code
+def issuekey=underlyingIssue // from ScriptRunner example code
 
 
+// Should use Behaviours way to get, this is standard
 Issue issue = issueManager.getIssueObject("${issuekey}")  // use really as a string
-field = customFieldManager.getCustomFieldObjectByName(SELECTION)
+def field = customFieldManager.getCustomFieldObjectByName(SELECTION)
 String selection = issue.getCustomFieldValue(field) // USE TYPE
+
+
+
+//String selection = getFieldByName("My Custom Field")
+date1field = getFieldByName("${DATE1}")
+
 
 log.info("Category: '${issuekey}'")
 log.info("Selection: '${selection}'")
@@ -67,11 +76,22 @@ if ("Dummy Value".equals(selection) ) {
 	log.info("Dummy Value is selected")
 }
 
-if (selection == KEYVALUE ) {
+//date1field = customFieldManager.getCustomFieldObjectByName(SELECTION)
+
+if (selection == KEYVALUE ) {  // Works but correct Category selection is valid in next edit round, not in same UI 
 	log.info("Category is selected")
+		date1field.setRequired(false)
+		date1field.setHidden(false) 
+		date1field.setReadOnly(false)  
+	
+	
 }
 if (selection != KEYVALUE) {
 	log.info("Category is NOT selected")
+		date1field.setRequired(false)
+		date1field.setHidden(true)
+		date1field.setReadOnly(true)
+	
 }
 
 
