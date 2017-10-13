@@ -58,15 +58,15 @@ def issuekey=underlyingIssue // from ScriptRunner example code
 
 
 // Should use Behaviours way to get, this is standard
-Issue issue = issueManager.getIssueObject("${issuekey}")  // use really as a string
-def field = customFieldManager.getCustomFieldObjectByName(SELECTION)
-String selection = issue.getCustomFieldValue(field) // USE TYPE
+//Issue issue = issueManager.getIssueObject("${issuekey}")  // use really as a string
+//def field = customFieldManager.getCustomFieldObjectByName(SELECTION)
+//String selection = issue.getCustomFieldValue(field) // USE TYPE
 
 
-
-//String selection = getFieldByName("My Custom Field")
+selectionfield = getFieldByName("${SELECTION}")
 date1field = getFieldByName("${DATE1}")
 
+selection=selectionfield.getValue() as String
 
 log.info("Category: '${issuekey}'")
 log.info("Selection: '${selection}'")
@@ -77,6 +77,7 @@ if ("Dummy Value".equals(selection) ) {
 }
 
 //date1field = customFieldManager.getCustomFieldObjectByName(SELECTION)
+
 
 if (selection == KEYVALUE ) {  // Works but correct Category selection is valid in next edit round, not in same UI 
 	log.info("Category is selected")
